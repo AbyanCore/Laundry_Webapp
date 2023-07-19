@@ -18,8 +18,8 @@ import Homepage from "./Pages/Home/Home.page";
 import LoginPage from "./Pages/Auth/Login.page";
 import NotFoundpage from "./Pages/Error/NotFound.page";
 import Servicepage from "./Pages/Layanan/Service.page";
-
 import OrderPage from "./Pages/Check_Pesanan/Order.page";
+
 import DworkerPage from "./Pages/Dashboard/Manage Resource/Dworker.page";
 import DservicePage from "./Pages/Dashboard/Manage Resource/Dservice.page";
 import DcustomerPage from "./Pages/Dashboard/Manage Order/Dcustomer.page";
@@ -34,6 +34,8 @@ import OnAddMoneyTransction from "./Pages/Dashboard/Manage Money/AddMoneyTransac
 import OnEditMoneyTransaction from "./Pages/Dashboard/Manage Money/EditMoneyTransaction.action";
 import OnAddCustomer from "./Pages/Dashboard/Manage Order/AddCustomer.action";
 import OnEditCustomer from "./Pages/Dashboard/Manage Order/EditCustomer.action";
+import OnAddOrder from "./Pages/Dashboard/Manage Order/AddOrder";
+import OnEditOrder from "./Pages/Dashboard/Manage Order/EditOrder";
 
 const route = createBrowserRouter(
     createRoutesFromElements(
@@ -61,6 +63,12 @@ const route = createBrowserRouter(
                 </Route>
                 <Route path="penjualan" element={<Outlet />}>
                     <Route index path="pesanan" element={<DorderPage />} />
+                    <Route index path="pesanan/add" element={<OnAddOrder />} />
+                    <Route
+                        index
+                        path="pesanan/edit/:id"
+                        element={<OnEditOrder />}
+                    />
                     <Route path="konsumen" element={<DcustomerPage />} />
                     <Route path="konsumen/add" element={<OnAddCustomer />} />
                     <Route

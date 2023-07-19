@@ -42,6 +42,12 @@ const Sidebar = () => {
         window.location.href = "/";
     };
 
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            setOpennav(!opennav);
+        }
+    });
+
     return (
         <div>
             <div className=" bg-blue-gray-500 w-screen h-20 flex">
@@ -59,7 +65,7 @@ const Sidebar = () => {
             <Card
                 className={`fixed top-4 ${
                     opennav ? "left-4" : "-left-96 "
-                } ease-out duration-300 h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5`}
+                } ease-out duration-300  w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5`}
             >
                 <div
                     className="mb-2 p-4"

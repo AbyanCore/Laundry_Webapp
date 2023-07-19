@@ -66,6 +66,27 @@ const getServicesClient = async () => {
     }
 };
 
+const getServiceDetailbyId = async (id: number) => {
+    try {
+        const res = await AxiosCus.get(`/service-detail/${id}`);
+
+        return res.data;
+    } catch (error) {
+        console.log(error);
+        return;
+    }
+};
+const getServiceDetails = async () => {
+    try {
+        const res = await AxiosCus.get(`/service-detail`);
+
+        return res.data;
+    } catch (error) {
+        console.log(error);
+        return;
+    }
+};
+
 export {
     getServices,
     getServicebyId,
@@ -73,4 +94,6 @@ export {
     updateService,
     deleteService,
     getServicesClient,
+    getServiceDetails,
+    getServiceDetailbyId,
 };

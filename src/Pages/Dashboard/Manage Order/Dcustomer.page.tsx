@@ -12,7 +12,6 @@ import {
 } from "@material-tailwind/react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { formatCurrencyIDR } from "../../../Utils/Currency.utils";
 import { deleteCustomer, getCustomers } from "../../../Api/Customer.API";
 
 const DcustomerPage = () => {

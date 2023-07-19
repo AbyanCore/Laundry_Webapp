@@ -1,5 +1,4 @@
 import Cookies from "js-cookie";
-import { getuserbytoken } from "../Api/Auth.API";
 import Unauthorizepage from "../Pages/Error/Unauthorize.page";
 
 const AuthSecurity = (TargetComponent: any) => {

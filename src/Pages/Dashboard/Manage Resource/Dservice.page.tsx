@@ -144,7 +144,7 @@ const DservicePage = () => {
                             Tidak Ada Data
                         </h1>
                     ) : (
-                        0
+                        ""
                     )}
                 </List>
             </Card>

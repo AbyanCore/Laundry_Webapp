@@ -17,15 +17,19 @@ import {
     deleteMoneyTransaction,
     getMoneyTransactions,
 } from "../../../Api/MoneyTransaction.API";
+import { getworkers } from "../../../Api/Worker.API";
 
 const DmoneyPage = () => {
     const [MoneyTransaction, setMoneyTransaction] = useState([]);
     const [opendetail, setOpendetail] = useState(0);
+    const [worker, setWorker] = useState([]);
     const [opendialog, setOpendialog] = useState({ open: false, id: 0 });
 
     const asyncdata = async () => {
         const moneytdata = await getMoneyTransactions();
+        const workerdata = await getworkers();
 
+        setWorker(workerdata.data);
         setMoneyTransaction(moneytdata.data);
     };
 
@@ -82,7 +86,11 @@ const DmoneyPage = () => {
                 <List>
                     {MoneyTransaction.map((money_transaction: any, index) => (
                         <ListItem
-                            className="hover:scale-[1.01] hover:py-[1.1rem] duration-200 "
+                            className={`hover:scale-[1.01] hover:py-[1.1rem] duration-200 ${
+                                money_transaction.amount < 0
+                                    ? "border-2 border-red-500 bg-red-50"
+                                    : "border-2 border-green-500 bg-green-50"
+                            }`}
                             key={money_transaction.id}
                             onClick={() =>
                                 setOpendetail(
@@ -109,10 +117,23 @@ const DmoneyPage = () => {
                                             color="gray"
                                             className="font-normal"
                                         >
+                                            {(worker.find(
+                                                (worker: any) =>
+                                                    worker.id ==
+                                                    money_transaction.user_id
+                                            ) as any)
+                                                ? (
+                                                      worker.find(
+                                                          (worker: any) =>
+                                                              worker.id ==
+                                                              money_transaction.user_id
+                                                      ) as any
+                                                  )["name"]
+                                                : "Outlet"}
+                                            {" | \n"}
                                             {formatCurrencyIDR(
                                                 money_transaction.amount
                                             )}
-                                            /{money_transaction.user_id}
                                         </Typography>
                                         <Collapse
                                             open={
@@ -153,7 +174,7 @@ const DmoneyPage = () => {
                             Tidak Ada Data
                         </h1>
                     ) : (
-                        0
+                        ""
                     )}
                 </List>
             </Card>

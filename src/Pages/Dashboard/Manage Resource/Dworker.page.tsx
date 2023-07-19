@@ -16,7 +16,15 @@ import { deleteworker, getworkers } from "../../../Api/Worker.API";
 import { getoutlets } from "../../../Api/Outlet";
 import { Link } from "react-router-dom";
 import { formatCurrencyIDR } from "../../../Utils/Currency.utils";
-import { BarChart, CartesianGrid, XAxis, YAxis, Legend, Bar } from "recharts";
+import {
+    BarChart,
+    CartesianGrid,
+    XAxis,
+    YAxis,
+    Legend,
+    Bar,
+    ResponsiveContainer,
+} from "recharts";
 import { getTitles } from "../../../Api/Misc.API";
 
 const DworkerPage = () => {
@@ -54,19 +62,16 @@ const DworkerPage = () => {
         <div className="flex flex-col">
             <div className=" overflow-x-auto h-max w-screen flex flex-row gap-2 mb-2">
                 <Card className="flex-grow p-2">
-                    <BarChart
-                        width={500}
-                        height={250}
-                        data={dataglobal}
-                        className="self-center"
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis dataKey="count" />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="count" fill="#8884d8" />
-                    </BarChart>
+                    <ResponsiveContainer height={200}>
+                        <BarChart data={dataglobal}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="name" />
+                            <YAxis dataKey="count" />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="count" fill="#8884d8" />
+                        </BarChart>
+                    </ResponsiveContainer>
                 </Card>
             </div>
             <div className="overflow-x-auto flex w-screen mb-3">
@@ -219,7 +224,7 @@ const DworkerPage = () => {
                             Tidak Ada Data
                         </h1>
                     ) : (
-                        0
+                        ""
                     )}
                 </List>
             </Card>
