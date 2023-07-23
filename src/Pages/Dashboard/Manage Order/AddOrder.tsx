@@ -6,7 +6,6 @@ import { getCustomers } from "../../../Api/Customer.API";
 import { formatCurrencyIDR } from "../../../Utils/Currency.utils";
 import { getworkersbyid } from "../../../Api/Worker.API";
 import { addOrder } from "../../../Api/Order.API";
-import { Tooltip } from "recharts";
 
 type Cart = {
     service: any;
@@ -20,7 +19,7 @@ const OnAddOrder = () => {
         service_id: -1,
         outlet_id: -1,
         discount: 0,
-        amount: 0,
+        amount: 0.0,
         phase: "antrian",
     });
     const [Service, setService] = React.useState<any>([]);
@@ -284,12 +283,13 @@ const OnAddOrder = () => {
                             title="service_id"
                             name="service_id"
                             value={formData.service_id}
-                            onChange={(e) =>
+                            onChange={(e) => {
+                                formData.amount = 0;
                                 setFormData({
                                     ...formData,
                                     service_id: parseInt(e.target.value),
-                                })
-                            }
+                                });
+                            }}
                             disabled={formData.client_id == -1}
                             required={Cart.length == 0}
                         >
@@ -312,11 +312,28 @@ const OnAddOrder = () => {
                             onChange={(e) =>
                                 setFormData({
                                     ...formData,
-                                    amount: parseInt(e.target.value),
+                                    amount:
+                                        (
+                                            Service.find((item: any) => {
+                                                return (
+                                                    item.id ==
+                                                    formData.service_id
+                                                );
+                                            }) as any
+                                        ).unit_type == "pcs"
+                                            ? parseInt(e.target.value)
+                                            : parseFloat(e.target.value),
                                 })
                             }
                             required={Cart.length == 0}
                         />
+                        <h1>
+                            {
+                                Service.find((item: any) => {
+                                    return item.id == formData.service_id;
+                                })?.unit_type
+                            }
+                        </h1>
                     </div>
                 </div>
                 <div className="self-center">

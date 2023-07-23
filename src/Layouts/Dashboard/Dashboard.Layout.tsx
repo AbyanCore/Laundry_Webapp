@@ -5,7 +5,7 @@ import AuthSecurity from "../../Security/Auth.Security";
 const DashboardLayout = () => {
     return (
         <div className="absolute flex flex-col">
-            <header className="z-50">
+            <header className="z-40">
                 <Navbar />
             </header>
             <body>

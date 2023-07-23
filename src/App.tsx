@@ -25,6 +25,7 @@ import DservicePage from "./Pages/Dashboard/Manage Resource/Dservice.page";
 import DcustomerPage from "./Pages/Dashboard/Manage Order/Dcustomer.page";
 import DorderPage from "./Pages/Dashboard/Manage Order/Dorder.page";
 import DmoneyPage from "./Pages/Dashboard/Manage Money/Dmoney.page";
+import DcompanyPage from "./Pages/Dashboard/Analytic All/Dcompany.page";
 
 import OnEditWorker from "./Pages/Dashboard/Manage Resource/Editworker.action";
 import OnAddWorker from "./Pages/Dashboard/Manage Resource/Addworker.action";
@@ -58,7 +59,7 @@ const route = createBrowserRouter(
 
             <Route path="dashboard" element={<DashboardLayout />}>
                 <Route path="beranda">
-                    <Route index path="usaha" element={<h1>Usaha Page</h1>} />
+                    <Route index path="usaha" element={<DcompanyPage/>} />
                     <Route path="outlet" element={<h1>Outlet Page</h1>} />
                 </Route>
                 <Route path="penjualan" element={<Outlet />}>
