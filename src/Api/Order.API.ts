@@ -11,6 +11,17 @@ const getOrders = async () => {
     }
 };
 
+const getOrderbyToken = async (token: string) => {
+    try {
+        const res = await AxiosCus.get(`/order/token/${token}`);
+
+        return res.data;
+    } catch (error) {
+        console.log(error);
+        return;
+    }
+};
+
 const getOrderbyId = async (id: number) => {
     try {
         const res = await AxiosCus.get(`/order/${id}`);
@@ -55,4 +66,11 @@ const deleteOrder = async (id: number) => {
     }
 };
 
-export { getOrders, getOrderbyId, addOrder, updateOrder, deleteOrder };
+export {
+    getOrders,
+    getOrderbyId,
+    addOrder,
+    updateOrder,
+    deleteOrder,
+    getOrderbyToken,
+};

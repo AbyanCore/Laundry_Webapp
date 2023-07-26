@@ -13,12 +13,21 @@ import { getPhase, getUnit_types } from "../../../Api/Misc.API";
 import { getServices } from "../../../Api/Service.API";
 import { getworkers } from "../../../Api/Worker.API";
 import CStackBar from "../../../Utils/Components/CStackBar.Component";
+import { getCustomers } from "../../../Api/Customer.API";
+
+import {
+    BsFillPersonFill,
+    BsFillGearFill,
+    BsFillPeopleFill,
+    BsBoxSeamFill,
+} from "react-icons/bs";
 
 const DcompanyPage = () => {
     const [dataTransaction, setDataTransaction] = useState<Array<any>>([]);
     const [dataOrder, setDataOrder] = useState<Array<any>>([]);
     const [dataService, setDataService] = useState<Array<any>>([]);
     const [dataWorker, setDataWorker] = useState<Array<any>>([]);
+    const [dataCustomer, setDataCustomer] = useState<Array<any>>([]);
 
     const [Phase, setPhase] = useState<Array<any>>([]);
     const [UnitType, setUnitType] = useState<Array<any>>([]);
@@ -38,11 +47,13 @@ const DcompanyPage = () => {
         const dataorder = await getOrders();
         const dataservice = await getServices();
         const dataworker = await getworkers();
+        const datacustomer = await getCustomers();
 
         setDataTransaction(datatransaction.data);
         setDataOrder(dataorder.data);
         setDataService(dataservice.data);
         setDataWorker(dataworker.data);
+        setDataCustomer(datacustomer.data);
 
         const dataphase = await getPhase();
         const dataunittype = await getUnit_types();
@@ -81,7 +92,7 @@ const DcompanyPage = () => {
                     .length - 1
             ]?.map((item: any) => {
                 return {
-                    created_at: item.created_at.split("T")[0],
+                    created_at: item.created_at.split("T")[1].slice(0, 8),
                     Keuntungan: item.amount > 0 ? item.amount : 0,
                     Kerugian: item.amount < 0 ? item.amount : 0,
                 };
@@ -209,6 +220,21 @@ const DcompanyPage = () => {
     >([]);
 
     useEffect(() => {
+        setdataOrder_Modified_byNow(
+            (Object.values(groupByDate(dataOrder, "created_at")) as Array<any>)[
+                (
+                    Object.values(
+                        groupByDate(dataOrder, "created_at")
+                    ) as Array<any>
+                ).length - 1
+            ]?.map((data: any) => {
+                return {
+                    created_at: data.created_at.split("T")[1].slice(0, 8),
+                    [data.phase]: 1,
+                };
+            })
+        );
+
         setdataOrder_Modified_byDate(
             Object.values(groupByDate(dataOrder, "created_at")).map(
                 (data: any) => {
@@ -287,7 +313,7 @@ const DcompanyPage = () => {
         <div className="w-full overflow-x-auto flex justify-center">
             <CStackBar
                 size={{ width: window.screen.width, height: 300 }}
-                data={dataTransaction_Modified_byYear}
+                data={dataOrder_Modified_byNow}
                 Xdatakey={"created_at"}
                 stackoffset={"sign"}
                 datakeys={[
@@ -348,6 +374,49 @@ const DcompanyPage = () => {
 
     return (
         <div className="flex flex-col gap-y-4 w-screen">
+            <section className="flex flex-col gap-y-2">
+                <Card className="w-full flex flex-row flex-wrap gap-x-2 gap-y-2 p-4">
+                    <h1 className="text-center w-full text-2xl font-bold">
+                        Keseluruhan
+                    </h1>
+                    <Card className="grow p-2 flex flex-row items-center justify-center">
+                        <BsFillGearFill size={50} />
+                        <div className="flex-col px-5">
+                            <h1 className="text-xl p-1">Layanan</h1>
+                            <h3 className="text-center font-bold text-2xl">
+                                {dataService.length}
+                            </h3>
+                        </div>
+                    </Card>
+                    <Card className="grow p-2 flex flex-row items-center justify-center">
+                        <BsFillPersonFill size={50} />
+                        <div className="flex-col px-5">
+                            <h1 className="text-xl p-1">Konsumen</h1>
+                            <h3 className="text-center font-bold text-2xl ">
+                                {dataCustomer.length}
+                            </h3>
+                        </div>
+                    </Card>
+                    <Card className="grow p-2 flex flex-row items-center justify-center">
+                        <BsFillPeopleFill size={50} />
+                        <div className="flex-col px-5">
+                            <h1 className="text-xl p-1">Pekerja</h1>
+                            <h3 className="text-center font-bold text-2xl">
+                                {dataWorker.length}
+                            </h3>
+                        </div>
+                    </Card>
+                    <Card className="grow p-2 flex flex-row items-center justify-center">
+                        <BsBoxSeamFill size={50} />
+                        <div className="flex-col px-5">
+                            <h1 className="text-xl p-1">Pesanan</h1>
+                            <h3 className="text-center font-bold text-2xl">
+                                {dataOrder.length}
+                            </h3>
+                        </div>
+                    </Card>
+                </Card>
+            </section>
             <section className="flex flex-col gap-y-2">
                 <div className="w-full flex flex-row flex-wrap gap-x-2 gap-y-2">
                     <Card className="w-full flex flex-row flex-wrap gap-x-2 gap-y-2 p-4">

@@ -10,13 +10,14 @@ import {
     AccordionBody,
     Tooltip,
 } from "@material-tailwind/react";
-import { GrMoney, GrResources } from "react-icons/gr";
 import { LiaBarsSolid } from "react-icons/lia";
+import { BsCashCoin, BsLayers } from "react-icons/bs";
 import {
     PresentationChartBarIcon,
     ShoppingBagIcon,
     UserCircleIcon,
     PowerIcon,
+    HomeIcon,
 } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 
@@ -26,6 +27,7 @@ import Cookies from "js-cookie";
 
 const Sidebar = () => {
     const navigate = useNavigate();
+
     const [opennav, setOpennav] = useState(false);
 
     const [open, setOpen] = React.useState(0);
@@ -42,11 +44,14 @@ const Sidebar = () => {
         window.location.href = "/";
     };
 
-    document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-            setOpennav(!opennav);
+    const handleOpenPage = (url: string, withrefresh: boolean = false) => {
+        if (withrefresh) {
+            window.location.href = url;
+        } else {
+            setOpennav(false);
+            navigate(url);
         }
-    });
+    };
 
     return (
         <div>
@@ -114,7 +119,9 @@ const Sidebar = () => {
                         <AccordionBody className="py-1">
                             <List className="p-0">
                                 <ListItem
-                                    onClick={() => navigate("beranda/usaha")}
+                                    onClick={() =>
+                                        handleOpenPage("beranda/usaha")
+                                    }
                                 >
                                     <ListItemPrefix>
                                         <ChevronRightIcon
@@ -125,7 +132,9 @@ const Sidebar = () => {
                                     Usaha
                                 </ListItem>
                                 <ListItem
-                                    onClick={() => navigate("beranda/outlet")}
+                                    onClick={() =>
+                                        handleOpenPage("beranda/outlet")
+                                    }
                                 >
                                     <ListItemPrefix>
                                         <ChevronRightIcon
@@ -169,7 +178,7 @@ const Sidebar = () => {
                             <List className="p-0">
                                 <ListItem
                                     onClick={() =>
-                                        navigate("penjualan/pesanan")
+                                        handleOpenPage("penjualan/pesanan")
                                     }
                                 >
                                     <ListItemPrefix>
@@ -182,7 +191,7 @@ const Sidebar = () => {
                                 </ListItem>
                                 <ListItem
                                     onClick={() =>
-                                        navigate("penjualan/konsumen")
+                                        handleOpenPage("penjualan/konsumen")
                                     }
                                 >
                                     <ListItemPrefix>
@@ -213,7 +222,7 @@ const Sidebar = () => {
                                 className="border-b-0 p-3"
                             >
                                 <ListItemPrefix>
-                                    <GrResources className="h-5 w-5" />
+                                    <BsLayers className="h-5 w-5" />
                                 </ListItemPrefix>
                                 <Typography
                                     color="blue-gray"
@@ -227,7 +236,7 @@ const Sidebar = () => {
                             <List className="p-0">
                                 <ListItem
                                     onClick={() =>
-                                        navigate("sumber-daya/karyawan")
+                                        handleOpenPage("sumber-daya/karyawan")
                                     }
                                 >
                                     <ListItemPrefix>
@@ -240,7 +249,7 @@ const Sidebar = () => {
                                 </ListItem>
                                 <ListItem
                                     onClick={() =>
-                                        navigate("sumber-daya/layanan")
+                                        handleOpenPage("sumber-daya/layanan")
                                     }
                                 >
                                     <ListItemPrefix>
@@ -271,7 +280,7 @@ const Sidebar = () => {
                                 className="border-b-0 p-3"
                             >
                                 <ListItemPrefix>
-                                    <GrMoney className="h-5 w-5" />
+                                    <BsCashCoin className="h-5 w-5" />
                                 </ListItemPrefix>
                                 <Typography
                                     color="blue-gray"
@@ -285,7 +294,7 @@ const Sidebar = () => {
                             <List className="p-0">
                                 <ListItem
                                     onClick={() =>
-                                        navigate("keuangan/keuangan")
+                                        handleOpenPage("keuangan/keuangan")
                                     }
                                 >
                                     <ListItemPrefix>
@@ -309,11 +318,17 @@ const Sidebar = () => {
                         </AccordionBody>
                     </Accordion>
                     <hr className="my-2 border-blue-gray-50" />
-                    <ListItem>
+                    <ListItem onClick={() => handleOpenPage("profile")}>
                         <ListItemPrefix>
                             <UserCircleIcon className="h-5 w-5" />
                         </ListItemPrefix>
                         Profile
+                    </ListItem>
+                    <ListItem onClick={() => handleOpenPage("/home", true)}>
+                        <ListItemPrefix>
+                            <HomeIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        Home
                     </ListItem>
                     <ListItem onClick={logouthandler}>
                         <ListItemPrefix>

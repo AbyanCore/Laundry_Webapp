@@ -37,6 +37,8 @@ import OnAddCustomer from "./Pages/Dashboard/Manage Order/AddCustomer.action";
 import OnEditCustomer from "./Pages/Dashboard/Manage Order/EditCustomer.action";
 import OnAddOrder from "./Pages/Dashboard/Manage Order/AddOrder";
 import OnEditOrder from "./Pages/Dashboard/Manage Order/EditOrder";
+import React from "react";
+import DprofilePage from "./Pages/Dashboard/Dprofile.page";
 
 const route = createBrowserRouter(
     createRoutesFromElements(
@@ -59,7 +61,7 @@ const route = createBrowserRouter(
 
             <Route path="dashboard" element={<DashboardLayout />}>
                 <Route path="beranda">
-                    <Route index path="usaha" element={<DcompanyPage/>} />
+                    <Route index path="usaha" element={<DcompanyPage />} />
                     <Route path="outlet" element={<h1>Outlet Page</h1>} />
                 </Route>
                 <Route path="penjualan" element={<Outlet />}>
@@ -103,6 +105,7 @@ const route = createBrowserRouter(
                     />
                     <Route path="laporan" element={<h1>laporan Page</h1>} />
                 </Route>
+                <Route path="profile" element={<DprofilePage />} />
             </Route>
 
             <Route path="unauthorized" element={<Unauthorizepage />} />
@@ -112,7 +115,11 @@ const route = createBrowserRouter(
 );
 
 const App = () => {
-    return <RouterProvider router={route} />;
+    return (
+        <div>
+            <RouterProvider router={route} />
+        </div>
+    );
 };
 
 export default App;

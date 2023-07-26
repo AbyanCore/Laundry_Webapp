@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 
 export const AxiosCus = axios.create({
     withCredentials: true,
-    baseURL: "https://laundryapi.insidertech.cloud/",
+    baseURL: "http://localhost:4000/",
+    // baseURL: "https://laundryapi.insidertech.cloud/",
     timeout: 5000,
     headers: {
         Authorization: Cookies.get("user-token"),
